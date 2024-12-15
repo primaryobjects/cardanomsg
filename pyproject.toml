@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cardanomsg"
+version = "0.1.1"
+authors = [
+    { name = "Kory Becker", email = "kbecker@primaryobjects.com" }
+]
+description = "A module to send ADA with a message in the metadata."
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "blockfrost-python",
+    "pycardano"
+]
+
+[project.urls]
+Homepage = "https://github.com/primaryobjects/cardanomsg"
+Issues = "https://github.com/primaryobjects/cardanomsg/issues"
