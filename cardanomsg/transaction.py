@@ -1,10 +1,21 @@
 # cardanomsg/transaction.py
 
 import json
-from blockfrost import ApiUrls
+from blockfrost import ApiUrls, BlockFrostApi
 from pycardano import *
 
-def send_ada_message(blockfrost_project_id, skey_path_name, recipient_address, amount, message, network = Network.TESTNET):
+def send_message(blockfrost_project_id, skey_path_name, recipient_address, amount, message, network = Network.TESTNET):
+    """
+    Sends a transaction of ADA from sender to recipient and creates a message in the transaction metadata. The resulting message is viewable on the blockchain.
+    Params:
+    blockfrost_project_id: Your BlockFrost Project ID
+    skey_path_name: File path to your wallet's secret json file. Use cardanomsg.wallet.create to generate one.
+    recipient_address: Wallet address of the recipient.
+    amount: Amount in lovelace to send to recipient along with message. 1 ADA = 1000000 lovelace
+    message: Text message to embed in the transaction metadata.
+    network: Network.TESTNET or Network.MAINNET
+    """
+
     # Load the signing key using pycardano
     with open(skey_path_name, "r") as f:
         skey_data = json.load(f)
@@ -58,3 +69,17 @@ def send_ada_message(blockfrost_project_id, skey_path_name, recipient_address, a
 
     # Return the transaction hash
     return signed_tx.id
+
+def get_message(blockfrost_project_id, transaction_hash, api = ApiUrls.preview):
+    """
+    Displays metadata from a blockchain transaction.
+    Params:
+    blockfrost_project_id: Your BlockFrost Project ID
+    transaction_hash: Transaction hash from sending a transaction using cardanomsg.transaction.send_message
+    api: BlockFrost API endpoint, includes ApiUrls.preview, ApiUrls.mainnet, ApiUrls.testnet
+    """
+
+    api = BlockFrostApi(project_id=blockfrost_project_id, base_url=api.value)
+
+    # Fetch the transaction metadata
+    return api.transaction_metadata(transaction_hash)

@@ -14,35 +14,48 @@ pip install cardanomsg
 
 A [BlockFrost](https://blockfrost.io/) API account is required *(to prevent needing to run the blockchain locally on your PC)*.
 
+## Send message
+
+Send a message in a transaction.
+
 ```python
-from cardanomsg.transaction import send_ada_message
-
-blockfrost_project_id = "your_blockfrost_project_id"
-skey_path_name = "path_to_your_secret_json_key_file"
-recipient_address = "your_recipient_address"
-
-transaction_hash = send_ada_message(blockfrost_project_id, skey_path_name, recipient_address, 1000000, "Hello World")
+from cardanomsg.transaction import send_message
+transaction_hash = send_message("<BLOCKFROST_PROJECT_ID>", "wallet.skey", "<RECIPIENT_ADDRESS>", 1000000, "Hello World")
 ```
 
-## View the message
+## Get message
 
-You can view the message on the blockchain using Cardanoscan.
+Get a message from a transaction.
 
-https://preview.cardanoscan.io/transaction/{transaction_hash}?tab=metadata
+```python
+from cardanomsg.transaction import get_message
+message = get_message("<BLOCKFROST_PROJECT_ID>", "079112f6a5192c6eeae57de0607d61e07dea864efc2bbad7aa953795a5c56aae")[0].json_metadata
+```
 
-Here is an example of the output:
+You can also view the message on the blockchain using Cardanoscan.
+
+https://preview.cardanoscan.io/transaction/079112f6a5192c6eeae57de0607d61e07dea864efc2bbad7aa953795a5c56aae?tab=metadata
 
 ```
 Summary | UTXOs | Metadata (1)
 
-Metadata Hash: 12345abcdefg606ab2b5f01298abxyz848e45187cf2c798ab389e6abcdefg
+Metadata Hash: 2f86fa9fdfcb606ab2b5f060bd125848e45187cf2c798ab389e6a9af98ba8ad1
 Public Label: 1
 Value: "Hello World"
 ```
 
-## Sender JSON file format
+## Create wallet
 
-The secret key for the sender is [generated](https://github.com/primaryobjects/cardano-tutorial/blob/main/generate.py) by pycardano. The format contains the following:
+Create a wallet.
+
+```
+from cardanomsg.wallet import create
+result = create()
+```
+
+Two files will be created: `wallet.skey` and `wallet.addr`.
+
+The contents of `wallet.skey` is the secret key with the following format.
 
 ```json
 {
