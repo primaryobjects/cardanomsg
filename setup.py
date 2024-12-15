@@ -11,7 +11,6 @@ setup(
         "pycardano"
     ],
     author="Kory Becker",
-    author_email="kbecker@primaryobjects.com",
     description="A module to send ADA with a message in the metadata.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
