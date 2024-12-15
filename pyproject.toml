@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "cardanomsg"
 version = "0.1.1"
 authors = [
-    { name = "Kory Becker", email = "kbecker@primaryobjects.com" }
+    { name = "Kory Becker" }
 ]
 description = "A module to send ADA with a message in the metadata."
 readme = "README.md"
