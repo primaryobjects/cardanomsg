@@ -1,10 +1,10 @@
 # cardanomsg/transaction.py
 
 import json
-from blockfrost import ApiUrls, BlockFrostApi
+from blockfrost import ApiUrls, BlockFrostApi, ApiError
 from pycardano import *
 
-def send_message(blockfrost_project_id, skey_path_name, recipient_address, amount, message, network = Network.TESTNET):
+def send_message(blockfrost_project_id, skey_path_name, recipient_address, amount, message, label = 1, network = Network.TESTNET):
     """
     Sends a transaction of ADA from sender to recipient and creates a message in the transaction metadata. The resulting message is viewable on the blockchain.
     Params:
@@ -12,7 +12,8 @@ def send_message(blockfrost_project_id, skey_path_name, recipient_address, amoun
     skey_path_name: File path to your wallet's secret json file. Use cardanomsg.wallet.create to generate one.
     recipient_address: Wallet address of the recipient.
     amount: Amount in lovelace to send to recipient along with message. 1 ADA = 1000000 lovelace
-    message: Text message to embed in the transaction metadata.
+    message: Text message or JSON object to embed in the transaction metadata.
+    label: A numeric searchable label to use for the message metadata. Default is 1.
     network: Network.TESTNET or Network.MAINNET
     """
 
@@ -55,7 +56,9 @@ def send_message(blockfrost_project_id, skey_path_name, recipient_address, amoun
 
     # Create metadata with the message
     metadata = Metadata()
-    metadata[1] = message
+
+    # Store as metadata (JSON object or text).
+    metadata[label] = message
 
     # Create auxiliary data with the metadata
     auxiliary_data = AuxiliaryData(data=metadata)
@@ -83,3 +86,20 @@ def get_message(blockfrost_project_id, transaction_hash, api = ApiUrls.preview):
 
     # Fetch the transaction metadata
     return api.transaction_metadata(transaction_hash)
+
+def find_message(blockfrost_project_id, label, api = ApiUrls.preview):
+    """
+    Returns metadata from all transactions using a specific label.
+    Params:
+    blockfrost_project_id: Your BlockFrost Project ID
+    label: The numeric metadata label to search for
+    api: BlockFrost API endpoint, includes ApiUrls.preview, ApiUrls.mainnet, ApiUrls.testnet
+    """
+    api = BlockFrostApi(project_id=blockfrost_project_id, base_url=api.value)
+
+    # Fetch the transaction metadata
+    try:
+        return api.metadata_label_json(label)
+    except ApiError as ex:
+        if ex.status_code == 404:
+            return None
