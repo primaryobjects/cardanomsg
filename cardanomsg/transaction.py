@@ -29,7 +29,12 @@ def send_message(blockfrost_project_id, skey_path_name, recipient_address, amoun
     address = Address(pvk.hash(), network=network)
 
     # Create a BlockFrost chain context
-    context = BlockFrostChainContext(blockfrost_project_id, base_url=ApiUrls.preview.value)
+    network_urls = {
+        Network.MAINNET: ApiUrls.mainnet.value,
+        Network.TESTNET: ApiUrls.preview.value
+    }
+    api_base_url = network_urls[network]
+    context = BlockFrostChainContext(blockfrost_project_id, base_url=api_base_url)
 
     # Create a transaction builder
     builder = TransactionBuilder(context)
