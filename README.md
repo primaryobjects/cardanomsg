@@ -93,6 +93,15 @@ The contents of `wallet.skey` is the secret key with the following format.
 }
 ```
 
+## Publishing to PyPi
+
+Use the following steps to publish a new version to PyPi.
+
+1. Update the version number in [pyproject.toml](https://github.com/primaryobjects/cardanomsg/blob/main/pyproject.toml#L7) and [setup.py](https://github.com/primaryobjects/cardanomsg/blob/main/setup.py#L7).
+2. Package the distributable: `py -m build`
+3. Upload the package: `py -m twine upload dist/*`
+4. Confirm the new version at https://pypi.org/project/cardanomsg
+
 ## License
 
 MIT
