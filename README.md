@@ -70,6 +70,13 @@ for message in messages:
     print(message.json_metadata)
 ```
 
+Find messages using a label on Cardano mainnet, count 10, page 2, sorted by most recent.
+
+```python
+from blockfrost import ApiUrls
+messages = find_message(<BLOCKFROST_PROJECT_ID>, 123, api=ApiUrls.mainnet, count=10, page=2, order='desc')
+```
+
 *The label must be numeric.*
 
 ## Create wallet

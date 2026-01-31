@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cardanomsg"
-version = "0.1.4"
+version = "0.1.5"
 authors = [
     { name = "Kory Becker" }
 ]
-description = "A module to send ADA with a message in the metadata."
+description = "A module to send Cardano ADA with a message in the metadata."
 readme = "README.md"
 requires-python = ">=3.6"
 classifiers = [

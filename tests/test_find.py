@@ -22,3 +22,9 @@ messages = find_message(blockfrost_project_id, 3648849023)
 print("Find multiple JSON objects:")
 for message in messages:
     print(message.json_metadata)
+
+# Load multiple JSON objects from the blockchain under the specified label, page, order.
+messages = find_message(blockfrost_project_id, 1, count=3, page=2, order="desc")
+print(f"Find multiple JSON objects with count, page, order ({len(messages)}):")
+for message in messages:
+    print(message.json_metadata)

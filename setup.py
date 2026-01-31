@@ -4,14 +4,14 @@ from setuptools import setup, find_packages
 
 setup(
     name="cardanomsg",
-    version="0.1.4",
+    version="0.1.5",
     packages=find_packages(),
     install_requires=[
         "blockfrost-python",
         "pycardano"
     ],
     author="Kory Becker",
-    description="A module to send ADA with a message in the metadata.",
+    description="A module to send Cardano ADA with a message in the metadata.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/primaryobjects/cardanomsg",

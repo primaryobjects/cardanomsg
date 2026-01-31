@@ -92,7 +92,7 @@ def get_message(blockfrost_project_id, transaction_hash, api = ApiUrls.preview):
     # Fetch the transaction metadata
     return api.transaction_metadata(transaction_hash)
 
-def find_message(blockfrost_project_id, label, api = ApiUrls.preview):
+def find_message(blockfrost_project_id, label, api = ApiUrls.preview, count = 100, page = 1, order = 'asc'):
     """
     Returns metadata from all transactions using a specific label.
     Params:
@@ -104,7 +104,7 @@ def find_message(blockfrost_project_id, label, api = ApiUrls.preview):
 
     # Fetch the transaction metadata
     try:
-        return api.metadata_label_json(label)
+        return api.metadata_label_json(label, count=count, page=page, order=order)
     except ApiError as ex:
         if ex.status_code == 404:
             return None
